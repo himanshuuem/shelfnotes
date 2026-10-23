@@ -2,6 +2,8 @@
 
 > A personal reading log: rate the books you finish, write what stuck, and see your shelf with real covers. Search **Open Library** to add a book in two clicks. Built with Express, EJS, **PostgreSQL** and axios.
 
+**🔗 Live demo:** https://shelfnotes.onrender.com/ *(free tier: the first visit after idle takes ~30–60s to wake up)*
+
 [![test](https://github.com/himanshuuem/shelfnotes/actions/workflows/test.yml/badge.svg)](https://github.com/himanshuuem/shelfnotes/actions/workflows/test.yml)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?logo=postgresql&logoColor=white)
 ![Express](https://img.shields.io/badge/Express-5-000?logo=express)

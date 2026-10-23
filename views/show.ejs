@@ -1,0 +1,22 @@
+<%- include("partials/head", { title: book.title }) %>
+<a href="/" class="back">← All books</a>
+<article class="detail">
+  <div class="detail-cover"><%- include("partials/cover", { coverId: book.cover_id, title: book.title, size: "L" }) %></div>
+  <div>
+    <h1><%= book.title %></h1>
+    <p class="by">by <%= book.author %><%= book.year ? ` · ${book.year}` : "" %></p>
+    <p class="meter" aria-label="Rated <%= book.rating %> out of 10"><span style="--r: <%= book.rating %>"></span><strong><%= book.rating %>/10</strong></p>
+    <p class="read">Finished <%= new Date(book.date_read).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }) %></p>
+    <% if (book.summary) { %><blockquote><%= book.summary %></blockquote><% } %>
+    <div class="notes">
+      <% paragraphs(book.notes).forEach((p) => { %><p><%= p %></p><% }) %>
+      <% if (!book.notes) { %><p class="empty">No notes yet.</p><% } %>
+    </div>
+    <div class="row">
+      <a class="btn" href="/books/<%= book.id %>/edit">Edit</a>
+      <% if (book.ol_key) { %><a class="btn ghost" href="https://openlibrary.org<%= book.ol_key %>">Open Library ↗</a><% } %>
+      <form method="post" action="/books/<%= book.id %>/delete" data-confirm="Remove “<%= book.title %>” from your shelf?"><button class="btn danger" type="submit">Delete</button></form>
+    </div>
+  </div>
+</article>
+<%- include("partials/foot") %>

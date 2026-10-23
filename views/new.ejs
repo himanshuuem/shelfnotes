@@ -1,0 +1,29 @@
+<%- include("partials/head", { title: "Add a book" }) %>
+<h1>Add a book</h1>
+<form class="search" method="get" action="/books/new">
+  <label for="ol-q">Find it on Open Library</label>
+  <div class="row">
+    <input id="ol-q" type="search" name="q" value="<%= q %>" placeholder="Title, author or ISBN" minlength="2">
+    <button type="submit" class="btn">Search</button>
+  </div>
+</form>
+<% if (searchError) { %><p class="err" role="alert"><%= searchError %></p><% } %>
+<% if (results.length) { %>
+  <ul class="results">
+    <% results.forEach((r) => { %>
+      <li>
+        <a href="/books/new?<%= new URLSearchParams({ ol_key: r.olKey, title: r.title, author: r.author, cover_id: r.coverId ?? '', year: r.year ?? '' }) %>#form">
+          <%- include("partials/cover", { coverId: r.coverId, title: r.title, size: "S" }) %>
+          <span><strong><%= r.title %></strong><br><small><%= r.author %><%= r.year ? ` · ${r.year}` : "" %></small></span>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
+<% } else if (q && !searchError) { %><p class="empty">No matches. Add it manually below.</p><% } %>
+
+<form class="book-form" id="form" method="post" action="/books">
+  <h2><%= values.title ? "Your notes" : "Or add it manually" %></h2>
+  <%- include("partials/book-form", { values, errors }) %>
+  <button type="submit" class="btn">Save to shelf</button>
+</form>
+<%- include("partials/foot") %>

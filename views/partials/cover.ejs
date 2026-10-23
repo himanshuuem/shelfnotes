@@ -1,0 +1,6 @@
+<% const src = coverUrl(coverId, size || "M"); %>
+<% if (src) { %>
+  <img class="cover" src="<%= src %>" alt="Cover of <%= title %>" loading="lazy" width="180" height="270">
+<% } else { %>
+  <div class="cover placeholder" aria-hidden="true"><span><%= title %></span></div>
+<% } %>

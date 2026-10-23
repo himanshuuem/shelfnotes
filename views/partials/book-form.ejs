@@ -1,0 +1,14 @@
+<input type="hidden" name="ol_key" value="<%= values.ol_key || '' %>">
+<div class="grid2">
+  <label>Title <input name="title" value="<%= values.title %>" required maxlength="200"><% if (errors.title) { %><span class="err"><%= errors.title %></span><% } %></label>
+  <label>Author <input name="author" value="<%= values.author %>" maxlength="160"><% if (errors.author) { %><span class="err"><%= errors.author %></span><% } %></label>
+  <label>Rating <span class="hint">1–10</span>
+    <input type="range" name="rating" min="1" max="10" value="<%= values.rating %>" data-rating-output="ratingOut">
+    <output id="ratingOut"><%= values.rating %></output><% if (errors.rating) { %><span class="err"><%= errors.rating %></span><% } %>
+  </label>
+  <label>Finished on <input type="date" name="date_read" value="<%= values.date_read %>" required><% if (errors.date_read) { %><span class="err"><%= errors.date_read %></span><% } %></label>
+  <label>Published <input type="number" name="year" value="<%= values.year ?? '' %>" placeholder="e.g. 2016"><% if (errors.year) { %><span class="err"><%= errors.year %></span><% } %></label>
+  <label>Open Library cover id <span class="hint">optional</span><input type="number" name="cover_id" value="<%= values.cover_id ?? '' %>"><% if (errors.cover_id) { %><span class="err"><%= errors.cover_id %></span><% } %></label>
+</div>
+<label>One-line takeaway <input name="summary" value="<%= values.summary %>" maxlength="280" placeholder="If you remember one thing…"><% if (errors.summary) { %><span class="err"><%= errors.summary %></span><% } %></label>
+<label>Notes <span class="hint">blank line = new paragraph</span><textarea name="notes" rows="10"><%= values.notes %></textarea><% if (errors.notes) { %><span class="err"><%= errors.notes %></span><% } %></label>

@@ -1,0 +1,17 @@
+databases:
+  - name: shelfnotes-db
+    plan: free
+    databaseName: shelfnotes
+services:
+  - type: web
+    name: shelfnotes
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run db:setup
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: shelfnotes-db
+          property: connectionString

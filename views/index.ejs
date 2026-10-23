@@ -1,0 +1,41 @@
+<%- include("partials/head", { title: "My shelf" }) %>
+<% if (flash === "deleted") { %><p class="flash" role="status">Book removed from your shelf.</p><% } %>
+<section class="intro">
+  <h1>Books I've read, and what stuck.</h1>
+  <dl class="stats">
+    <div><dt>Books</dt><dd><%= stats.total %></dd></div>
+    <div><dt>This year</dt><dd><%= stats.this_year %></dd></div>
+    <div><dt>Avg rating</dt><dd><%= stats.avg_rating ?? "—" %></dd></div>
+  </dl>
+</section>
+
+<form class="toolbar" method="get" action="/">
+  <input type="search" name="q" value="<%= q %>" placeholder="Search titles, authors, notes…" aria-label="Search books">
+  <label>Sort
+    <select name="sort" data-autosubmit>
+      <option value="recent" <%= sort === "recent" ? "selected" : "" %>>Recently read</option>
+      <option value="rating" <%= sort === "rating" ? "selected" : "" %>>Highest rated</option>
+      <option value="title" <%= sort === "title" ? "selected" : "" %>>Title A–Z</option>
+    </select>
+  </label>
+  <noscript><button type="submit">Apply</button></noscript>
+</form>
+
+<% if (!books.length) { %><p class="empty"><%= q ? "No books match that search." : "Your shelf is empty. Add the last book you finished!" %></p><% } %>
+<ul class="shelf">
+  <% books.forEach((b) => { %>
+    <li class="book">
+      <a href="/books/<%= b.id %>">
+        <%- include("partials/cover", { coverId: b.cover_id, title: b.title, size: "M" }) %>
+        <span class="rating" aria-label="Rated <%= b.rating %> out of 10"><%= b.rating %></span>
+      </a>
+      <div>
+        <h2><a href="/books/<%= b.id %>"><%= b.title %></a></h2>
+        <p class="by"><%= b.author %></p>
+        <% if (b.summary) { %><p class="summary">“<%= b.summary %>”</p><% } %>
+        <p class="read">Read <%= new Date(b.date_read).toLocaleDateString("en-IN", { month: "short", year: "numeric" }) %></p>
+      </div>
+    </li>
+  <% }) %>
+</ul>
+<%- include("partials/foot") %>
